@@ -50,7 +50,7 @@ def get_homepage():
         "home/index", stats=stats,
         blog_posts=blog_posts
     )
-    page.v2 = True    
+    page.v2 = True
     return dict(page)
 
 def get_cached_homepage():
@@ -127,6 +127,18 @@ def generic_carousel(query=None, subject=None, work_id=None, _type=None,
             query=query, subject=subject, work_id=work_id, _type=_type,
             sorts=sorts, limit=limit)[0]
     return storify(books) if books else books
+
+@public
+def sponsor_me_carousel():
+    try:
+        data = random_ebooks()
+        if len(data) > 60:
+            data = random.sample(data,60)
+        return storify(data)
+
+    except Exception:
+        logger.error("Failed to compute data for sponsor_me_carousel", exc_info=True)
+        return None
 
 @public
 def readonline_carousel():
